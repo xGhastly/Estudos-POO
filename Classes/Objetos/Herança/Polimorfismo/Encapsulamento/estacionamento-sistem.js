@@ -58,7 +58,7 @@ class RegistroMotoristas {
     registraMotorista(motorista) {
         if (!this.motoristas.some(f => f.nome === motorista.nome)) {
             this.motoristas.push(motorista);
-            return 'Motorista cadastrado com sucesso.';
+            return console.log(`Motorista ${motorista.nome} cadastrado com sucesso.`);
         } else {
             return 'Motorista já cadastrado.';
         }
@@ -68,14 +68,15 @@ class RegistroMotoristas {
         const index = this.motoristas.findIndex(f => f.nome === nome);
         if (index !== -1) {
             const removido = this.motoristas.splice(index, 1);
-            return `Motorista ${removido[0].nome} foi removido com sucesso.`;
+            return console.log( `Motorista ${removido[0].nome} foi removido com sucesso.`);
         } else {
             return 'Motorista não existe.';
         }
     }
 
     listaMotoristas() {
-        return this.motoristas.map(motorista => motorista.nome);
+        const lista = this.motoristas.map(motorista => motorista.nome);
+        console.log(lista)
     }
 }
 
@@ -131,19 +132,27 @@ class GerenciarViagens {
     }
 }
 
-// Exemplo de uso:
-const motorista1 = new Motorista("João");
+
 const registroMotoristas = new RegistroMotoristas();
-
-console.log(registroMotoristas.registraMotorista(motorista1));
-console.log(registroMotoristas.listaMotoristas());
-
 const ponto = new RegistroPonto();
-ponto.registraChegada(motorista1, "08:00");
-ponto.registraSaida(motorista1, "18:00");
-
 const viagens = new GerenciarViagens();
-viagens.saidaViagem(motorista1, "São Paulo");
+
+const motorista1 = new Motorista('João');
+const motorista2 = new Motorista('Paulo')
+
+registroMotoristas.registraMotorista(motorista1);
+registroMotoristas.registraMotorista(motorista2);
+registroMotoristas.listaMotoristas();
+
+ponto.registraChegada(motorista1, '08:00');
+ponto.registraChegada(motorista2, '10:00');
+
+viagens.saidaViagem(motorista1, 'São Paulo');
+viagens.saidaViagem(motorista2, 'Rio de Janeiro');
 viagens.listarViagens();
 viagens.chegadaViagem(motorista1);
+viagens.chegadaViagem(motorista2);
 
+ponto.registraSaida(motorista1, '18:00');
+ponto.registraSaida(motorista2, '20:00');
+ponto.checaBdPonto();
